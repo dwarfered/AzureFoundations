@@ -279,30 +279,6 @@
                         }
                     },
                     {
-                        "name": "tenantApi",
-                        "type": "Microsoft.Solutions.ArmApiControl",
-                        "request": {
-                            "method": "GET",
-                            "path": "tenants?api-version=2020-01-01"
-                        }
-                    },
-                    {
-                        "name": "esAzureAdTenant",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Azure AD Tenant (required)",
-                        "toolTip": "",
-                        "multiselect": false,
-                        "selectAll": true,
-                        "filter": true,
-                        "filterPlaceholder": "Filter items ...",
-                        "multiLine": true,
-                        "visible": true,
-                        "constraints": {
-                            "allowedValues": "[map(steps('esPlatformManagement').tenantApi.value, (tenant) => parse(concat('{\"label\":\"', tenant.displayName, '\",\"description\":\"', tenant.tenantId, '\",\"value\":\"', toLower(tenant.tenantId), '\"}')) )]",
-                            "required": true
-                        }
-                    },
-                    {
                         "name": "esPlatformSubId",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Platform Azure Subscription (required)",
@@ -1464,7 +1440,7 @@
             "enableIdentity": "[steps('esPlatformConnectivity').esIdentity]",
             "addressPrefix": "[steps('esPlatformConnectivity').esAddress]",
             "location": "[steps('esPlatformConnectivity').esNwLocation]",
-            "tenantId": "[steps('esPlatformManagement').esAzureAdTenant]",
+            "tenantId": "[subscription().tenantId]",
             "subscriptionId": "[steps('esPlatformManagement').esPlatformSubId]",
             "enableLogAnalytics": "[steps('esPlatformManagement').esLogAnalytics]",
             "enableAsc": "[steps('esPlatformManagement').esAsc]",
